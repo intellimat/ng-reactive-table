@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { UsersCardViewComponent } from './components/users-view/users-card-view/users-card-view.component';
 import { UsersTableViewComponent } from './components/users-view/users-table-view/users-table-view.component';
 import { MaterialModule } from './material/material.module';
-import { CardComponent } from './componentes/shared/card/card.component';
+import { CardComponent } from './components/shared/card/card.component';
 
 @NgModule({
   declarations: [
