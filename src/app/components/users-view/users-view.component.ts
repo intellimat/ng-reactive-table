@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { loadUsers } from 'src/app/store/users/users.actions';
+import { usersFeature } from 'src/app/store/users/usersFeature';
 
 @Component({
   selector: 'app-users-view',
@@ -6,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users-view.component.scss'],
 })
 export class UsersViewComponent implements OnInit {
-  constructor() {}
+  data = this.store.select(usersFeature.selectData);
+  constructor(private store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(loadUsers());
+  }
 }
