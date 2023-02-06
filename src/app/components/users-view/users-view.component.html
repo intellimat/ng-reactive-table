@@ -21,6 +21,10 @@
   </ng-template>
 
   <ng-template #tableTemplate>
-    <app-users-table> </app-users-table>
+    <app-users-table
+      [data]="(data$ | async) || []"
+      [loading]="(loading$ | async) || false"
+    >
+    </app-users-table>
   </ng-template>
 </div>
