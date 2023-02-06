@@ -4,11 +4,11 @@ import { filter, map } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 
 @Component({
-  selector: 'app-users-card-view',
-  templateUrl: './users-card-view.component.html',
-  styleUrls: ['./users-card-view.component.scss'],
+  selector: 'app-users-cards',
+  templateUrl: './users-cards.component.html',
+  styleUrls: ['./users-cards.component.scss'],
 })
-export class UsersCardViewComponent implements OnInit, OnChanges {
+export class UsersCardsComponent implements OnInit, OnChanges {
   @Input() data: User[] = [];
   @Input() loading = false;
   filteredData = this.data;

@@ -14,13 +14,13 @@
   ></ng-container>
 
   <ng-template #cardsTemplate>
-    <app-users-card-view
+    <app-users-cards
       [data]="(data$ | async) || []"
       [loading]="(loading$ | async) || false"
-    ></app-users-card-view>
+    ></app-users-cards>
   </ng-template>
 
   <ng-template #tableTemplate>
-    <app-users-table-view> </app-users-table-view>
+    <app-users-table> </app-users-table>
   </ng-template>
 </div>
