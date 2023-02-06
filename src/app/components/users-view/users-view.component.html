@@ -1,4 +1,26 @@
-<app-users-card-view
-  [data]="(data$ | async) || []"
-  [loading]="(loading$ | async) || false"
-></app-users-card-view>
+<div class="outmost-container">
+  <mat-button-toggle-group
+    name="view selector"
+    aria-label="view type"
+    [value]="view"
+    (change)="onChange($event)"
+  >
+    <mat-button-toggle value="cardsView">Cards view</mat-button-toggle>
+    <mat-button-toggle value="tableView">Table view</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <ng-container
+    *ngIf="view === 'cardsView'; then cardsTemplate; else tableTemplate"
+  ></ng-container>
+
+  <ng-template #cardsTemplate>
+    <app-users-card-view
+      [data]="(data$ | async) || []"
+      [loading]="(loading$ | async) || false"
+    ></app-users-card-view>
+  </ng-template>
+
+  <ng-template #tableTemplate>
+    <app-users-table-view> </app-users-table-view>
+  </ng-template>
+</div>
