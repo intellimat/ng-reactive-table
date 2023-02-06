@@ -1,1 +1,4 @@
-<app-users-card-view [data]="(data | async) || []"></app-users-card-view>
+<app-users-card-view
+  [data]="(data$ | async) || []"
+  [loading]="(loading$ | async) || false"
+></app-users-card-view>

@@ -8,6 +8,7 @@ import { UsersTableViewComponent } from './components/users-view/users-table-vie
 import { MaterialModule } from './material/material.module';
 import { CardComponent } from './components/shared/card/card.component';
 import { NgrxModule } from './store/ngrx.module';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,13 @@ import { NgrxModule } from './store/ngrx.module';
     UsersTableViewComponent,
     CardComponent,
   ],
-  imports: [MaterialModule, BrowserModule, BrowserAnimationsModule, NgrxModule],
+  imports: [
+    MaterialModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgrxModule,
+    NgxSkeletonLoaderModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

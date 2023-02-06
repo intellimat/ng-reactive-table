@@ -6,13 +6,31 @@
     </mat-form-field>
   </form>
 
-  <div class="cards-container">
-    <app-card
-      *ngFor="let user of filteredData"
-      img="assets/defaultAvatar.png"
-      [subtitle]="getTag(user)"
-      [title]="user.name"
-      [footer]="user.email"
-    ></app-card>
-  </div>
+  <ng-container
+    *ngIf="loading; then loadingTemplate; else loadedTemplate"
+  ></ng-container>
+
+  <ng-template #loadingTemplate>
+    <ngx-skeleton-loader
+      [theme]="{
+        height: '120px',
+        width: '220px',
+        borderRadius: '5%',
+        margin: '8px'
+      }"
+      appearance="circle"
+      count="10"
+    ></ngx-skeleton-loader>
+  </ng-template>
+
+  <ng-template #loadedTemplate>
+    <div class="cards-container">
+      <app-card
+        *ngFor="let user of filteredData"
+        img="assets/defaultAvatar.png"
+        [subtitle]="getTag(user)"
+        [title]="user.name"
+        [footer]="user.email"
+      ></app-card></div
+  ></ng-template>
 </div>

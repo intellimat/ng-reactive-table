@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class UsersCardViewComponent implements OnInit, OnChanges {
   @Input() data: User[] = [];
+  @Input() loading = false;
   filteredData = this.data;
   search = new FormControl<string>('');
 

@@ -9,7 +9,8 @@ import { usersFeature } from 'src/app/store/users/usersFeature';
   styleUrls: ['./users-view.component.scss'],
 })
 export class UsersViewComponent implements OnInit {
-  data = this.store.select(usersFeature.selectData);
+  data$ = this.store.select(usersFeature.selectData);
+  loading$ = this.store.select(usersFeature.selectLoading);
   constructor(private store: Store) {}
 
   ngOnInit(): void {
