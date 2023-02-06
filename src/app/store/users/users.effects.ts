@@ -3,7 +3,23 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, exhaustMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
-import { loadUsers, loadUsersFailure, loadUsersSuccess } from './users.actions';
+import {
+  deleteUser,
+  deleteUserFailure,
+  deleteUserSuccess,
+  loadUsers,
+  loadUsersFailure,
+  loadUsersSuccess,
+  patchUser,
+  patchUserFailure,
+  patchUserSuccess,
+  postUser,
+  postUserFailure,
+  postUserSuccess,
+  putUser,
+  putUserFailure,
+  putUserSuccess,
+} from './users.actions';
 
 @Injectable()
 export class UsersEffects {
@@ -15,7 +31,87 @@ export class UsersEffects {
           map((data) => loadUsersSuccess({ data })),
           catchError(() =>
             of(
-              loadUsersFailure({ error: 'Error getting users from API call.' })
+              loadUsersFailure({
+                error: 'Error from API call: could not get users',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUser),
+      exhaustMap(({ userId }) =>
+        this.usersService.deleteUser(userId).pipe(
+          map(() => deleteUserSuccess({ userId })),
+          catchError(() =>
+            of(
+              deleteUserFailure({
+                error: `Error from API call: could not delete user ${userId}`,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  postUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postUser),
+      exhaustMap(({ user }) =>
+        this.usersService.postUser(user).pipe(
+          map(() => postUserSuccess({ user })),
+          catchError(() =>
+            of(
+              postUserFailure({
+                error: `Error from API call: could not post user ${JSON.stringify(
+                  user
+                )}`,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  patchUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(patchUser),
+      exhaustMap(({ user }) =>
+        this.usersService.patchUser(user).pipe(
+          map(() => patchUserSuccess({ user })),
+          catchError(() =>
+            of(
+              patchUserFailure({
+                error: `Error from API call: could not patch user ${JSON.stringify(
+                  user
+                )}`,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  putUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(putUser),
+      exhaustMap(({ user }) =>
+        this.usersService.putUser(user).pipe(
+          map(() => putUserSuccess({ user })),
+          catchError(() =>
+            of(
+              putUserFailure({
+                error: `Error from API call: could not put user ${JSON.stringify(
+                  user
+                )}`,
+              })
             )
           )
         )
