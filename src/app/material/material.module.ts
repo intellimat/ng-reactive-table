@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatCardModule,
     MatButtonToggleModule,
+    MatButtonModule,
     MatTableModule,
     MatIconModule,
   ],
@@ -23,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatCardModule,
     MatButtonToggleModule,
+    MatButtonModule,
     MatTableModule,
     MatIconModule,
   ],
