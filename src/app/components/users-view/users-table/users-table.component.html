@@ -83,7 +83,7 @@
         </button>
         <button
           mat-icon-button
-          (click)="element.isEditable ? onCancel(element) : onDelete(element)"
+          (click)="element.isEditable ? onCancel(element) : openDialog(element)"
           aria-label="Delete row"
         >
           <mat-icon

@@ -57,14 +57,15 @@ export class UsersTableComponent implements OnChanges {
     }));
   }
 
-  openDialog(): void {
+  openDialog({ id: userId }: EditableUser): void {
     this.dialog.open(ConfirmationDialogComponent, {
-      width: '250px',
+      width: '300px',
       data: {
         title: 'Delete user',
         question: 'Are you sure to delete this user?',
         cancelText: 'No',
         confirmationText: ' Yes',
+        onConfirmation: () => this.store.dispatch(deleteUser({ userId })),
       },
     });
   }
@@ -86,11 +87,6 @@ export class UsersTableComponent implements OnChanges {
       );
     }
     user.isEditable = !user.isEditable;
-  }
-
-  onDelete({ id: userId }: EditableUser) {
-    this.store.dispatch(deleteUser({ userId }));
-    //TODO: open dialog
   }
 
   onCancel(user: EditableUser) {
