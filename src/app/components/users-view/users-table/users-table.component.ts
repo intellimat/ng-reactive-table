@@ -1,14 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, Input, OnChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Department, EditableUser, User } from 'src/app/models/user.model';
-import { deleteUser } from 'src/app/store/users/users.actions';
+import { EditableUser, User } from 'src/app/models/user.model';
+import { deleteUser, patchUser } from 'src/app/store/users/users.actions';
 
 @Component({
   selector: 'app-users-table',
@@ -18,24 +12,22 @@ import { deleteUser } from 'src/app/store/users/users.actions';
 export class UsersTableComponent implements OnChanges {
   @Input() data: User[] = [];
   @Input() loading = false;
+  tableData = this.parseInputData();
   displayedColumns = ['id', 'name', 'email', 'department', 'operations'];
-
-  departments = Object.values(Department);
-  tableForm = this.formBuilder.group({
-    tableRows: this.formBuilder.array<EditableUser>([]),
-  });
-  tableRows = this.getFormControls;
+  tableFormGroup = this.generateTableFormGroup([]);
   valuesBeforeEditing = new Map<number, EditableUser>();
 
   constructor(private formBuilder: FormBuilder, private store: Store) {}
 
   ngOnChanges() {
-    if (!this.data) return;
-    this.tableForm = this.formBuilder.group({
-      tableRows: this.formBuilder.array<EditableUser>([]),
-    });
-    this.data.forEach((user) => {
-      this.addRow(user);
+    this.tableData = this.parseInputData();
+    const formArray = this.tableData.map((user) => this.createFormGroup(user));
+    this.tableFormGroup = this.generateTableFormGroup(formArray);
+  }
+
+  private generateTableFormGroup(formArray: FormGroup[]) {
+    return this.formBuilder.group({
+      tableRows: this.formBuilder.array<FormGroup>(formArray),
     });
   }
 
@@ -45,71 +37,45 @@ export class UsersTableComponent implements OnChanges {
       name: [user.name, Validators.required],
       email: [user.email, [Validators.email, Validators.required]],
       department: [user.department, [Validators.required]],
-      isEditable: [false],
     });
   }
 
-  get getFormControls() {
-    const control = this.tableForm.get('tableRows') as FormArray;
-    return control;
+  get tableRows() {
+    return this.tableFormGroup.get('tableRows') as FormArray;
   }
 
-  private addRow(user: User) {
-    const tableRows = this.getFormControls;
-    const newUser = this.createFormGroup(user);
-    tableRows.push(newUser);
+  private parseInputData(): EditableUser[] {
+    return this.data.map((user) => ({
+      ...user,
+      isEditable: false,
+    }));
   }
 
-  // onDeleteClick(
-  //   group: AbstractControl<EditableUser, EditableUser>,
-  //   rowIndex: number
-  // ) {
-  //   const user = group.value;
-  //   this.store.dispatch(deleteUser({ userId: user.id }));
-  // }
-
-  onEditClick(
-    group: AbstractControl<EditableUser, EditableUser>,
-    rowIndex: number
-  ) {
-    group.disable();
-    this.valuesBeforeEditing.set(rowIndex, group.getRawValue());
-    this.setUserIsEditable(group, true);
+  onEdit(user: EditableUser, rowIndex: number) {
+    if (user.isEditable) {
+      const updatedUser = this.tableRows
+        .at(rowIndex)
+        .getRawValue() as EditableUser;
+      this.store.dispatch(
+        patchUser({
+          user: {
+            id: updatedUser.id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            department: updatedUser.department,
+          },
+        })
+      );
+    }
+    user.isEditable = !user.isEditable;
   }
 
-  onDeleteClick(
-    group: AbstractControl<EditableUser, EditableUser>,
-    rowIndex: number
-  ) {
-    const user = group.value;
-    // const event: TableEvent = {
-    //   user,
-    //   type: TableEventType.DeleteRow,
-    //   rowIndex,
-    // };
-    // this.tableEventEE.emit(event);
+  onDelete({ id: userId }: EditableUser) {
+    this.store.dispatch(deleteUser({ userId }));
+    //TODO: open dialog
   }
 
-  onConfirmEdit(
-    group: AbstractControl<EditableUser, EditableUser>,
-    rowIndex: number
-  ) {
-    const user = group.value;
-  }
-
-  onCancelClick(
-    group: AbstractControl<EditableUser, EditableUser>,
-    rowIndex: number
-  ) {
-    const previousRawValue = this.valuesBeforeEditing.get(rowIndex!);
-    group.setValue(previousRawValue!);
-    this.valuesBeforeEditing.delete(rowIndex);
-  }
-
-  private setUserIsEditable(
-    group: AbstractControl<EditableUser, EditableUser>,
-    value: boolean
-  ) {
-    group.get('isEditable')!.setValue(value);
+  onCancel(user: EditableUser) {
+    user.isEditable = !user.isEditable;
   }
 }

@@ -1,4 +1,7 @@
 mat-card {
+  min-height: 120px;
+  width: 220px;
+  margin: 0 16px 16px 0;
   mat-card-header {
     display: flex;
     flex-direction: row;
