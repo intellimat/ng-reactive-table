@@ -9,6 +9,7 @@ import { CardComponent } from './components/shared/card/card.component';
 import { NgrxModule } from './store/ngrx.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { UsersCardsComponent } from './components/users-view/users-cards/users-cards.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { UsersCardsComponent } from './components/users-view/users-cards/users-c
     UsersCardsComponent,
     UsersTableComponent,
     CardComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     MaterialModule,

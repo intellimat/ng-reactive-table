@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  {{ question }}
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{ cancelText }}</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>
+    {{ confirmationText }}
+  </button>
+</div>
