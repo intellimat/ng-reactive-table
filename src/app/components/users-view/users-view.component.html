@@ -1,13 +1,23 @@
 <div class="outmost-container">
-  <mat-button-toggle-group
-    name="view selector"
-    aria-label="view type"
-    [value]="view"
-    (change)="onChange($event)"
-  >
-    <mat-button-toggle value="cardsView">Cards view</mat-button-toggle>
-    <mat-button-toggle value="tableView">Table view</mat-button-toggle>
-  </mat-button-toggle-group>
+  <div class="buttons-container">
+    <mat-button-toggle-group
+      name="view selector"
+      aria-label="view type"
+      [value]="view"
+      (change)="onChange($event)"
+    >
+      <mat-button-toggle value="cardsView">Cards view</mat-button-toggle>
+      <mat-button-toggle value="tableView">Table view</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button
+      mat-raised-button
+      name="add user"
+      aria-label="add user"
+      (click)="onAddUser()"
+    >
+      Add user
+    </button>
+  </div>
 
   <ng-container
     *ngIf="view === 'cardsView'; then cardsTemplate; else tableTemplate"

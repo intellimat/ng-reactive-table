@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTableModule } from '@angular/material/table';
@@ -14,7 +13,6 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [
     CommonModule,
     MatInputModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatButtonToggleModule,
     MatButtonModule,
@@ -24,7 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   exports: [
     MatInputModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatButtonToggleModule,
     MatButtonModule,

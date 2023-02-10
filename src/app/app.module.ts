@@ -4,12 +4,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersViewComponent } from './components/users-view/users-view.component';
 import { UsersTableComponent } from './components/users-view/users-table/users-table.component';
-import { MaterialModule } from './material/material.module';
-import { CardComponent } from './components/shared/card/card.component';
 import { NgrxModule } from './store/ngrx.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { UsersCardsComponent } from './components/users-view/users-cards/users-cards.component';
-import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { SharedModule } from './shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddUserDialogComponent } from './components/users-view/add-user-dialog/add-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,15 +17,15 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     UsersViewComponent,
     UsersCardsComponent,
     UsersTableComponent,
-    CardComponent,
-    ConfirmationDialogComponent,
+    AddUserDialogComponent,
   ],
   imports: [
-    MaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgrxModule,
     NgxSkeletonLoaderModule,
+    SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

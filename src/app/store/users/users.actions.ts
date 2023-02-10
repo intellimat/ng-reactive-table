@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
+import { RequestBodyUser, User } from 'src/app/models/user.model';
 
 export const loadUsers = createAction('[Users API] Load users');
 export const loadUsersSuccess = createAction(
@@ -39,7 +39,7 @@ export const putUserFailure = createAction(
 
 export const postUser = createAction(
   '[Users API] Post user',
-  props<{ user: User }>()
+  props<{ user: RequestBodyUser }>()
 );
 export const postUserSuccess = createAction(
   '[Users API] Post user success',

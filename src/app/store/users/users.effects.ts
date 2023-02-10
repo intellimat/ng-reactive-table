@@ -62,14 +62,14 @@ export class UsersEffects {
   postUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(postUser),
-      exhaustMap(({ user }) =>
-        this.usersService.postUser(user).pipe(
-          map(() => postUserSuccess({ user })),
+      exhaustMap(({ user: requestBodyUser }) =>
+        this.usersService.postUser(requestBodyUser).pipe(
+          map((createdUser) => postUserSuccess({ user: createdUser })),
           catchError(() =>
             of(
               postUserFailure({
                 error: `Error from API call: could not post user ${JSON.stringify(
-                  user
+                  requestBodyUser
                 )}`,
               })
             )

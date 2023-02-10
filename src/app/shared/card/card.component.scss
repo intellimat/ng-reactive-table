@@ -18,6 +18,8 @@ mat-card {
   }
 
   mat-card-footer {
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 0 16px 8px 16px;
   }
 }

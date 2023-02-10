@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { loadUsers } from 'src/app/store/users/users.actions';
 import { usersFeature } from 'src/app/store/users/usersFeature';
+import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 
 @Component({
   selector: 'app-users-view',
@@ -12,9 +14,10 @@ import { usersFeature } from 'src/app/store/users/usersFeature';
 export class UsersViewComponent implements OnInit {
   data$ = this.store.select(usersFeature.selectData);
   loading$ = this.store.select(usersFeature.selectLoading);
+
   view = 'cardsView';
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers());
@@ -22,5 +25,11 @@ export class UsersViewComponent implements OnInit {
 
   onChange(event: MatButtonToggleChange) {
     this.view = event.value;
+  }
+
+  onAddUser() {
+    this.dialog.open(AddUserDialogComponent, {
+      width: '400px',
+    });
   }
 }
