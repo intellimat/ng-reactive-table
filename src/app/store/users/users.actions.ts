@@ -68,3 +68,8 @@ export const deleteUserFailure = createAction(
   '[Users API] Delete user failure',
   props<{ error: HttpCallError }>()
 );
+
+export const setSearchWord = createAction(
+  '[Filter] Set search word',
+  props<{ searchWord: string }>()
+);

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { loadUsers } from 'src/app/store/users/users.actions';
+import { filter, map } from 'rxjs';
+import { loadUsers, setSearchWord } from 'src/app/store/users/users.actions';
+import { selectFilteredUsers } from 'src/app/store/users/users.custom-selectors';
 import { usersFeature } from 'src/app/store/users/usersFeature';
 import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 
@@ -12,15 +15,16 @@ import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.compon
   styleUrls: ['./users-view.component.scss'],
 })
 export class UsersViewComponent implements OnInit {
-  data$ = this.store.select(usersFeature.selectData);
+  data$ = this.store.select(selectFilteredUsers);
   loading$ = this.store.select(usersFeature.selectLoading);
-
-  view = 'tableView';
+  search = new FormControl<string>('');
+  view = 'cardsView';
 
   constructor(private store: Store, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers());
+    this.updateUsersState();
   }
 
   onChange(event: MatButtonToggleChange) {
@@ -31,5 +35,17 @@ export class UsersViewComponent implements OnInit {
     this.dialog.open(AddUserDialogComponent, {
       width: '400px',
     });
+  }
+
+  private updateUsersState() {
+    this.search.valueChanges
+      .pipe(
+        filter((searchWord) => searchWord !== null),
+        map((searchWord) => searchWord as string),
+        map((searchWord: string) => searchWord.toLowerCase())
+      )
+      .subscribe((searchWord) => {
+        this.store.dispatch(setSearchWord({ searchWord }));
+      });
   }
 }

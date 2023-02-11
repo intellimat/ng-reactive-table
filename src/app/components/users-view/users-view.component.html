@@ -18,6 +18,12 @@
       Add user
     </button>
   </div>
+  <form>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput value="" [formControl]="search" />
+    </mat-form-field>
+  </form>
 
   <ng-container
     *ngIf="view === 'cardsView'; then cardsTemplate; else tableTemplate"

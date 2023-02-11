@@ -17,10 +17,12 @@ import {
   putUser,
   putUserFailure,
   putUserSuccess,
+  setSearchWord,
 } from './users.actions';
 
 interface UsersState {
   data: User[];
+  searchWord: string;
   loading: boolean;
   errors: HttpCallError[];
   idsOfUsersBeingUpdated: number[];
@@ -29,6 +31,7 @@ interface UsersState {
 const initialState: UsersState = {
   data: [],
   loading: false,
+  searchWord: '',
   errors: [],
   idsOfUsersBeingUpdated: [],
 };
@@ -133,6 +136,10 @@ export const usersFeature = createFeature({
         (id) => id !== error.userId
       ),
       errors: [...state.errors, error],
+    })),
+    on(setSearchWord, (state, { searchWord }) => ({
+      ...state,
+      searchWord,
     }))
   ),
 });

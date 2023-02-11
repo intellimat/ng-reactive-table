@@ -1,11 +1,4 @@
 <div class="outmost-container">
-  <form>
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput value="" [formControl]="search" />
-    </mat-form-field>
-  </form>
-
   <ng-container
     *ngIf="loading; then loadingTemplate; else loadedTemplate"
   ></ng-container>
@@ -19,14 +12,14 @@
         margin: '8px'
       }"
       appearance="circle"
-      count="10"
+      count="15"
     ></ngx-skeleton-loader>
   </ng-template>
 
   <ng-template #loadedTemplate>
     <div class="cards-container">
       <app-card
-        *ngFor="let user of filteredData"
+        *ngFor="let user of data"
         img="assets/defaultAvatar.png"
         [subtitle]="getTag(user)"
         [title]="user.name"
