@@ -26,11 +26,13 @@
       </mat-form-field>
     </form>
     <mat-paginator
-      [length]="100"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25, 100]"
+      (page)="handlePageEvent($event)"
+      [length]="(filteredDataLength$ | async) || 0"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
       aria-label="Select page"
     >
+      >
     </mat-paginator>
   </div>
 
@@ -40,14 +42,14 @@
 
   <ng-template #cardsTemplate>
     <app-users-cards
-      [data]="(data$ | async) || []"
+      [data]="(paginatedData$ | async) || []"
       [loading]="(loading$ | async) || false"
     ></app-users-cards>
   </ng-template>
 
   <ng-template #tableTemplate>
     <app-users-table
-      [data]="(data$ | async) || []"
+      [data]="(paginatedData$ | async) || []"
       [loading]="(loading$ | async) || false"
     >
     </app-users-table>
