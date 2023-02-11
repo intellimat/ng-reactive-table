@@ -1,6 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { RequestBodyUser, User } from 'src/app/models/user.model';
 
+export interface HttpCallError {
+  description: string;
+  action: 'loadUsers' | 'patchUser' | 'putUser' | 'postUser' | 'deleteUser';
+  userId?: number;
+}
+
 export const loadUsers = createAction('[Users API] Load users');
 export const loadUsersSuccess = createAction(
   '[Users API] Load users success',
@@ -8,7 +14,7 @@ export const loadUsersSuccess = createAction(
 );
 export const loadUsersFailure = createAction(
   '[Users API] Load users failure',
-  props<{ error: string }>()
+  props<{ error: HttpCallError }>()
 );
 
 export const patchUser = createAction(
@@ -21,7 +27,7 @@ export const patchUserSuccess = createAction(
 );
 export const patchUserFailure = createAction(
   '[Users API] Patch user failure',
-  props<{ error: string }>()
+  props<{ error: HttpCallError }>()
 );
 
 export const putUser = createAction(
@@ -34,7 +40,7 @@ export const putUserSuccess = createAction(
 );
 export const putUserFailure = createAction(
   '[Users API] Put user failure',
-  props<{ error: string }>()
+  props<{ error: HttpCallError }>()
 );
 
 export const postUser = createAction(
@@ -47,7 +53,7 @@ export const postUserSuccess = createAction(
 );
 export const postUserFailure = createAction(
   '[Users API] Post user failure',
-  props<{ error: string }>()
+  props<{ error: HttpCallError }>()
 );
 
 export const deleteUser = createAction(
@@ -60,5 +66,5 @@ export const deleteUserSuccess = createAction(
 );
 export const deleteUserFailure = createAction(
   '[Users API] Delete user failure',
-  props<{ error: string }>()
+  props<{ error: HttpCallError }>()
 );

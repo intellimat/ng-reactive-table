@@ -1,10 +1,11 @@
-import { Component, Inject, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { EditableUser, User } from 'src/app/models/user.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { deleteUser, patchUser } from 'src/app/store/users/users.actions';
+import { usersFeature } from 'src/app/store/users/usersFeature';
 
 @Component({
   selector: 'app-users-table',
@@ -14,6 +15,9 @@ import { deleteUser, patchUser } from 'src/app/store/users/users.actions';
 export class UsersTableComponent implements OnChanges {
   @Input() data: User[] = [];
   @Input() loading = false;
+  idsOfUsersBeingUpdated = this.store.select(
+    usersFeature.selectIdsOfUsersBeingUpdated
+  );
   tableData = this.parseInputData();
   displayedColumns = ['id', 'name', 'email', 'department', 'operations'];
   tableFormGroup = this.generateTableFormGroup([]);

@@ -15,7 +15,7 @@ export class UsersViewComponent implements OnInit {
   data$ = this.store.select(usersFeature.selectData);
   loading$ = this.store.select(usersFeature.selectLoading);
 
-  view = 'cardsView';
+  view = 'tableView';
 
   constructor(private store: Store, private dialog: MatDialog) {}
 

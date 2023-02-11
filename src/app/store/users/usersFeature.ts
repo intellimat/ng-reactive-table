@@ -4,6 +4,7 @@ import {
   deleteUser,
   deleteUserFailure,
   deleteUserSuccess,
+  HttpCallError,
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
@@ -21,15 +22,15 @@ import {
 interface UsersState {
   data: User[];
   loading: boolean;
-  error: string;
-  dataUpdating: boolean;
+  errors: HttpCallError[];
+  idsOfUsersBeingUpdated: number[];
 }
 
 const initialState: UsersState = {
   data: [],
   loading: false,
-  error: '',
-  dataUpdating: false,
+  errors: [],
+  idsOfUsersBeingUpdated: [],
 };
 
 export const usersFeature = createFeature({
@@ -43,45 +44,50 @@ export const usersFeature = createFeature({
     on(loadUsersSuccess, (state, { data }) => ({
       ...state,
       data,
+      errors: state.errors.filter((error) => error.action !== 'loadUsers'),
       loading: false,
-      error: '',
     })),
     on(loadUsersFailure, (state, { error }) => ({
       ...state,
       loading: false,
-      error,
+      errors: [...state.errors, error],
     })),
-    on(deleteUser, (state) => ({
+    on(deleteUser, (state, { userId }) => ({
       ...state,
-      dataUpdating: true,
+      idsOfUsersBeingUpdated: [...state.idsOfUsersBeingUpdated, userId],
     })),
     on(deleteUserSuccess, (state, { userId }) => ({
       ...state,
       data: state.data.filter((user) => user.id !== userId),
-      dataUpdating: false,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== userId
+      ),
+      errors: state.errors.filter(
+        (error) => error.action !== 'deleteUser' && error.userId === userId
+      ),
     })),
     on(deleteUserFailure, (state, { error }) => ({
       ...state,
-      dataUpdating: false,
-      error,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== error.userId
+      ),
+      errors: [...state.errors, error],
     })),
     on(postUser, (state) => ({
       ...state,
-      dataUpdating: true,
     })),
     on(postUserSuccess, (state, { user }) => ({
       ...state,
       data: [...state.data, user],
-      dataUpdating: false,
+      errors: state.errors.filter((error) => error.action !== 'postUser'),
     })),
     on(postUserFailure, (state, { error }) => ({
       ...state,
-      dataUpdating: false,
-      error,
+      errors: [...state.errors, error],
     })),
-    on(patchUser, (state) => ({
+    on(patchUser, (state, { user }) => ({
       ...state,
-      dataUpdating: true,
+      idsOfUsersBeingUpdated: [...state.idsOfUsersBeingUpdated, user.id],
     })),
     on(patchUserSuccess, (state, { user: patchedUser }) => ({
       ...state,
@@ -89,16 +95,24 @@ export const usersFeature = createFeature({
         if (user.id === patchedUser.id) return patchedUser;
         else return user;
       }),
-      dataUpdating: false,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== patchedUser.id
+      ),
+      errors: state.errors.filter(
+        (error) =>
+          error.action !== 'patchUser' && error.userId === patchedUser.id
+      ),
     })),
     on(patchUserFailure, (state, { error }) => ({
       ...state,
-      dataUpdating: false,
-      error,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== error.userId
+      ),
+      errors: [...state.errors, error],
     })),
-    on(putUser, (state) => ({
+    on(putUser, (state, { user }) => ({
       ...state,
-      dataUpdating: true,
+      idsOfUsersBeingUpdated: [...state.idsOfUsersBeingUpdated, user.id],
     })),
     on(putUserSuccess, (state, { user: putUser }) => ({
       ...state,
@@ -106,12 +120,19 @@ export const usersFeature = createFeature({
         if (user.id === putUser.id) return putUser;
         else return user;
       }),
-      dataUpdating: false,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== putUser.id
+      ),
+      errors: state.errors.filter(
+        (error) => error.action !== 'putUser' && error.userId === putUser.id
+      ),
     })),
     on(putUserFailure, (state, { error }) => ({
       ...state,
-      dataUpdating: false,
-      error,
+      idsOfUsersBeingUpdated: state.idsOfUsersBeingUpdated.filter(
+        (id) => id !== error.userId
+      ),
+      errors: [...state.errors, error],
     }))
   ),
 });

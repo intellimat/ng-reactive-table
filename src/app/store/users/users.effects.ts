@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, catchError, exhaustMap } from 'rxjs/operators';
+import {
+  map,
+  catchError,
+  exhaustMap,
+  switchMap,
+  concatMap,
+  mergeMap,
+} from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
   deleteUser,
@@ -32,7 +39,10 @@ export class UsersEffects {
           catchError(() =>
             of(
               loadUsersFailure({
-                error: 'Error from API call: could not get users',
+                error: {
+                  description: 'Error from API call: could not get users',
+                  action: 'loadUsers',
+                },
               })
             )
           )
@@ -44,13 +54,17 @@ export class UsersEffects {
   deleteUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteUser),
-      exhaustMap(({ userId }) =>
+      mergeMap(({ userId }) =>
         this.usersService.deleteUser(userId).pipe(
           map(() => deleteUserSuccess({ userId })),
           catchError(() =>
             of(
               deleteUserFailure({
-                error: `Error from API call: could not delete user ${userId}`,
+                error: {
+                  description: 'Error from API call: could not delete user',
+                  action: 'deleteUser',
+                  userId,
+                },
               })
             )
           )
@@ -62,15 +76,16 @@ export class UsersEffects {
   postUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(postUser),
-      exhaustMap(({ user: requestBodyUser }) =>
+      mergeMap(({ user: requestBodyUser }) =>
         this.usersService.postUser(requestBodyUser).pipe(
-          map((createdUser) => postUserSuccess({ user: createdUser })),
+          map((createdUser) => postUserSuccess({ user: createdUser })), // newly created user has an id
           catchError(() =>
             of(
               postUserFailure({
-                error: `Error from API call: could not post user ${JSON.stringify(
-                  requestBodyUser
-                )}`,
+                error: {
+                  description: 'Error from API call: could not post user',
+                  action: 'postUser',
+                },
               })
             )
           )
@@ -82,15 +97,17 @@ export class UsersEffects {
   patchUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(patchUser),
-      exhaustMap(({ user }) =>
+      mergeMap(({ user }) =>
         this.usersService.patchUser(user).pipe(
           map(() => patchUserSuccess({ user })),
           catchError(() =>
             of(
               patchUserFailure({
-                error: `Error from API call: could not patch user ${JSON.stringify(
-                  user
-                )}`,
+                error: {
+                  description: 'Error from API call: could not patch user',
+                  action: 'patchUser',
+                  userId: user.id,
+                },
               })
             )
           )
@@ -102,15 +119,17 @@ export class UsersEffects {
   putUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(putUser),
-      exhaustMap(({ user }) =>
+      mergeMap(({ user }) =>
         this.usersService.putUser(user).pipe(
           map(() => putUserSuccess({ user })),
           catchError(() =>
             of(
               putUserFailure({
-                error: `Error from API call: could not put user ${JSON.stringify(
-                  user
-                )}`,
+                error: {
+                  description: 'Error from API call: could not put user',
+                  action: 'putUser',
+                  userId: user.id,
+                },
               })
             )
           )
