@@ -14,7 +14,6 @@ export class AddUserDialogComponent {
     name: ['', Validators.required],
     email: ['', [Validators.email, Validators.required]],
     department: ['', [Validators.required]],
-    city: ['', [Validators.required]],
   });
 
   constructor(private store: Store, private formBuilder: FormBuilder) {}
@@ -24,7 +23,6 @@ export class AddUserDialogComponent {
       name: this.addUserFormGroup.get('name')?.value,
       email: this.addUserFormGroup.get('email')?.value,
       department: this.addUserFormGroup.get('department')?.value,
-      city: this.addUserFormGroup.get('name')?.value,
       created: new Date().toISOString(),
     } as unknown as RequestBodyUser;
     this.store.dispatch(postUser({ user }));

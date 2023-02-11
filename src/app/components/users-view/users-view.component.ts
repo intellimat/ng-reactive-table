@@ -67,8 +67,6 @@ export class UsersViewComponent implements OnInit {
   handlePageEvent(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    console.log(event.length);
-
     this.paginatedData$ = this.store.select(
       selectPaginatedFilteredUsers(this.pageIndex, this.pageSize)
     );

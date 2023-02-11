@@ -145,6 +145,7 @@
           <div *ngIf="!idsOfUsersBeingUpdated.includes(element.id)">
             <button
               mat-icon-button
+              [disabled]="element.isEditable && !tableRows.at(i).valid"
               (click)="onEdit(element, i)"
               aria-label="Edit row"
             >
