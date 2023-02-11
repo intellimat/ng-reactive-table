@@ -1,9 +1,5 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { filter, map } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { setSearchWord } from 'src/app/store/users/users.actions';
 
 @Component({
   selector: 'app-users-cards',

@@ -1,11 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
+import { UsersViewComponent } from './components/users-view/users-view.component';
+import { MaterialModule } from './material/material.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      declarations: [AppComponent, UsersViewComponent],
+      imports: [MatDialogModule, MaterialModule],
+      providers: [
+        provideMockStore({}),
+        { provide: MAT_DIALOG_DATA, useValue: {} },
       ],
     }).compileComponents();
   });
@@ -20,12 +27,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('ng-reactive-table');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ng-reactive-table app is running!');
   });
 });
