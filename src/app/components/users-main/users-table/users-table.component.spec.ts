@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MaterialModule } from 'src/app/material/material.module';
 import { UsersTableComponent } from './users-table.component';
 
 describe('UsersTableComponent', () => {
@@ -11,8 +12,11 @@ describe('UsersTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UsersTableComponent],
-      imports: [MaterialModule, ReactiveFormsModule],
-      providers: [provideMockStore({})],
+      imports: [ReactiveFormsModule, MatDialogModule, MatTableModule],
+      providers: [
+        provideMockStore({}),
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UsersTableComponent);

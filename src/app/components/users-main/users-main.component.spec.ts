@@ -3,27 +3,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MaterialModule } from 'src/app/material/material.module';
 import { UsersCardsComponent } from './users-cards/users-cards.component';
-import { UsersViewComponent } from './users-view.component';
-
-describe('UsersViewComponent', () => {
-  let component: UsersViewComponent;
-  let fixture: ComponentFixture<UsersViewComponent>;
+import { UsersMainComponent } from './users-main.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+describe('UsersMainComponent', () => {
+  let component: UsersMainComponent;
+  let fixture: ComponentFixture<UsersMainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UsersViewComponent, UsersCardsComponent],
+      declarations: [UsersMainComponent, UsersCardsComponent],
       imports: [
         MatDialogModule,
-        MaterialModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        MatButtonToggleModule,
+        MatInputModule,
+        MatPaginatorModule,
       ],
       providers: [provideMockStore({})],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UsersViewComponent);
+    fixture = TestBed.createComponent(UsersMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import {
-  map,
-  catchError,
-  exhaustMap,
-  switchMap,
-  concatMap,
-  mergeMap,
-} from 'rxjs/operators';
+import { map, catchError, exhaustMap, mergeMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
   deleteUser,
@@ -36,16 +30,21 @@ export class UsersEffects {
       exhaustMap(() =>
         this.usersService.getUsers().pipe(
           map((data) => loadUsersSuccess({ data })),
-          catchError(() =>
-            of(
+          catchError(() => {
+            const errorDescription = 'Error from API call: could not get users';
+            this._snackBar.open(errorDescription, 'Close', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            return of(
               loadUsersFailure({
                 error: {
-                  description: 'Error from API call: could not get users',
+                  description: errorDescription,
                   action: 'loadUsers',
                 },
               })
-            )
-          )
+            );
+          })
         )
       )
     )
@@ -57,17 +56,23 @@ export class UsersEffects {
       mergeMap(({ userId }) =>
         this.usersService.deleteUser(userId).pipe(
           map(() => deleteUserSuccess({ userId })),
-          catchError(() =>
-            of(
+          catchError(() => {
+            const errorDescription =
+              'Error from API call: could not delete user';
+            this._snackBar.open(errorDescription, 'Close', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            return of(
               deleteUserFailure({
                 error: {
-                  description: 'Error from API call: could not delete user',
+                  description: errorDescription,
                   action: 'deleteUser',
                   userId,
                 },
               })
-            )
-          )
+            );
+          })
         )
       )
     )
@@ -79,16 +84,21 @@ export class UsersEffects {
       mergeMap(({ user: requestBodyUser }) =>
         this.usersService.postUser(requestBodyUser).pipe(
           map((createdUser) => postUserSuccess({ user: createdUser })), // newly created user has an id
-          catchError(() =>
-            of(
+          catchError(() => {
+            const errorDescription = 'Error from API call: could not post user';
+            this._snackBar.open(errorDescription, 'Close', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            return of(
               postUserFailure({
                 error: {
-                  description: 'Error from API call: could not post user',
+                  description: errorDescription,
                   action: 'postUser',
                 },
               })
-            )
-          )
+            );
+          })
         )
       )
     )
@@ -100,17 +110,23 @@ export class UsersEffects {
       mergeMap(({ user }) =>
         this.usersService.patchUser(user).pipe(
           map(() => patchUserSuccess({ user })),
-          catchError(() =>
-            of(
+          catchError(() => {
+            const errorDescription =
+              'Error from API call: could not patch user';
+            this._snackBar.open(errorDescription, 'Close', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            return of(
               patchUserFailure({
                 error: {
-                  description: 'Error from API call: could not patch user',
+                  description: errorDescription,
                   action: 'patchUser',
                   userId: user.id,
                 },
               })
-            )
-          )
+            );
+          })
         )
       )
     )
@@ -122,21 +138,30 @@ export class UsersEffects {
       mergeMap(({ user }) =>
         this.usersService.putUser(user).pipe(
           map(() => putUserSuccess({ user })),
-          catchError(() =>
-            of(
+          catchError(() => {
+            const errorDescription = 'Error from API call: could not put user';
+            this._snackBar.open(errorDescription, 'Close', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            return of(
               putUserFailure({
                 error: {
-                  description: 'Error from API call: could not put user',
+                  description: errorDescription,
                   action: 'putUser',
                   userId: user.id,
                 },
               })
-            )
-          )
+            );
+          })
         )
       )
     )
   );
 
-  constructor(private actions$: Actions, private usersService: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private usersService: UserService,
+    private _snackBar: MatSnackBar
+  ) {}
 }

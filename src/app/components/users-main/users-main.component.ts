@@ -16,10 +16,10 @@ import { paginatorConfig } from './paginator.config';
 
 @Component({
   selector: 'app-users-view',
-  templateUrl: './users-view.component.html',
-  styleUrls: ['./users-view.component.scss'],
+  templateUrl: './users-main.component.html',
+  styleUrls: ['./users-main.component.scss'],
 })
-export class UsersViewComponent implements OnInit {
+export class UsersMainComponent implements OnInit {
   loading$ = this.store.select(usersFeature.selectLoading);
   search = new FormControl<string>('');
   view = 'cardsView';

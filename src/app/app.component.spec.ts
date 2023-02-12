@@ -2,14 +2,21 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
-import { UsersViewComponent } from './components/users-view/users-view.component';
-import { MaterialModule } from './material/material.module';
+import { UsersMainComponent } from './components/users-main/users-main.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, UsersViewComponent],
-      imports: [MatDialogModule, MaterialModule],
+      declarations: [AppComponent, UsersMainComponent],
+      imports: [
+        MatDialogModule,
+        MatButtonToggleModule,
+        MatInputModule,
+        MatPaginatorModule,
+      ],
       providers: [
         provideMockStore({}),
         { provide: MAT_DIALOG_DATA, useValue: {} },
