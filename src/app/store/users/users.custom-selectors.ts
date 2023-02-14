@@ -15,15 +15,9 @@ export const selectPaginatedFilteredUsers = (
   pageIndex: number,
   pageSize: number
 ) => {
-  return createSelector(usersFeature.selectUsersState, (state) =>
-    state.data
-      .filter(
-        (user) =>
-          user.email.trim().toLowerCase().includes(state.searchWord) ||
-          user.name.trim().toLowerCase().includes(state.searchWord)
-      )
-      .filter(
-        (_, i) => i < (pageIndex + 1) * pageSize && i >= pageIndex * pageSize
-      )
+  return createSelector(selectFilteredUsers, (users) =>
+    users.filter(
+      (_, i) => i < (pageIndex + 1) * pageSize && i >= pageIndex * pageSize
+    )
   );
 };
