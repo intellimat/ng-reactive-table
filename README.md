@@ -48,7 +48,8 @@ The verbose property _IdsOfUsersBeingUpdated_ is needed to manage the loading st
 ### Docker
 
 Github actions have been configured so that a new image is pushed to my docker hub account every time a commit has been pushed.
-Docker Image: _intellimat/ng-reactive-table_.
+
+Docker Image: _intellimat/ng-reactive-table_
 
 ### Deployment
 
