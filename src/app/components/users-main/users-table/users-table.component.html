@@ -12,7 +12,7 @@
   <p class="loading-table-message" *ngIf="loading">
     Loading data for the table
   </p>
-  <form [formGroup]="tableFormGroup" *ngIf="!loading">
+  <form [formGroup]="tableFormGroup" *ngIf="!loading && data.length > 0">
     <table
       mat-table
       [dataSource]="tableData"
@@ -177,4 +177,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </form>
+  <p *ngIf="data.length === 0">
+    No users were found that match the current filter.
+  </p>
 </ng-template>
