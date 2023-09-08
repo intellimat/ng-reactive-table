@@ -6,7 +6,7 @@ Filtering and pagination have also been implemented in the frontend.
 
 ### Stack
 
-- Angular 15.1.4
+- Angular 16.2.4
 - NgRx
 - Angular Material
 - ngx-skeleton-loader
