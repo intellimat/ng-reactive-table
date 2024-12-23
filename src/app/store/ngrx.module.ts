@@ -5,26 +5,20 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { usersFeature } from './users/usersFeature';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './users/users.effects';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature(usersFeature),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([UsersEffects]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      // logOnly: !isDevMode(), // Restrict extension to log-only mode
-      autoPause: true,
-      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
-      traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
-      connectInZone: true,
-    }),
-    MatSnackBarModule,
-  ],
-})
+@NgModule({ declarations: [], imports: [CommonModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature(usersFeature),
+        EffectsModule.forRoot([]),
+        EffectsModule.forFeature([UsersEffects]),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            // logOnly: !isDevMode(), // Restrict extension to log-only mode
+            autoPause: true,
+            trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
+            traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
+            connectInZone: true,
+        }),
+        MatSnackBarModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class NgrxModule {}
