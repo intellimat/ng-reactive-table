@@ -6,7 +6,7 @@ Filtering and pagination have also been implemented in the frontend.
 
 ### Stack
 
-- Angular 17
+- Angular 18
 - NgRx
 - Angular Material
 - ngx-skeleton-loader
@@ -47,7 +47,7 @@ The verbose property _IdsOfUsersBeingUpdated_ is needed to manage the loading st
 
 ### Docker
 
-Github actions have been configured so that a new image is pushed to my docker hub account every time a commit has been pushed.
+Github actions have been configured so that a new image is pushed to my docker hub account every time a commit has been pushed in the master branch.
 
 Docker Image: _intellimat/ng-reactive-table_
 
