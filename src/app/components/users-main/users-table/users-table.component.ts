@@ -8,9 +8,10 @@ import { deleteUser, patchUser } from 'src/app/store/users/users.actions';
 import { usersFeature } from 'src/app/store/users/usersFeature';
 
 @Component({
-  selector: 'app-users-table',
-  templateUrl: './users-table.component.html',
-  styleUrls: ['./users-table.component.scss'],
+    selector: 'app-users-table',
+    templateUrl: './users-table.component.html',
+    styleUrls: ['./users-table.component.scss'],
+    standalone: false
 })
 export class UsersTableComponent implements OnChanges {
   @Input() data: User[] = [];

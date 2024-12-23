@@ -5,9 +5,10 @@ import { RequestBodyUser } from 'src/app/models/user.model';
 import { postUser } from 'src/app/store/users/users.actions';
 
 @Component({
-  selector: 'app-add-user-dialog',
-  templateUrl: './add-user-dialog.component.html',
-  styleUrls: ['./add-user-dialog.component.scss'],
+    selector: 'app-add-user-dialog',
+    templateUrl: './add-user-dialog.component.html',
+    styleUrls: ['./add-user-dialog.component.scss'],
+    standalone: false
 })
 export class AddUserDialogComponent {
   addUserFormGroup = this.formBuilder.group({
