@@ -15,10 +15,10 @@ import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.compon
 import { paginatorConfig } from './paginator.config';
 
 @Component({
-    selector: 'app-users-view',
-    templateUrl: './users-main.component.html',
-    styleUrls: ['./users-main.component.scss'],
-    standalone: false
+  selector: 'app-users-view',
+  templateUrl: './users-main.component.html',
+  styleUrls: ['./users-main.component.scss'],
+  standalone: false,
 })
 export class UsersMainComponent implements OnInit {
   loading$ = this.store.select(usersFeature.selectLoading);

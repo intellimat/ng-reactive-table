@@ -15,11 +15,15 @@
   .buttons-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 1em;
+    column-gap: 1em;
     justify-content: space-between;
     align-items: center;
   }
 
   .form-paginator-container {
+    margin-bottom: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

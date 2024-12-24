@@ -1,6 +1,12 @@
+<!-- Template Variables -->
+@let loading = (loading$ | async) || false ; @let paginatedData =
+(paginatedData$ | async) || []; @let fileteredDataLength= (filteredDataLength$ |
+async) || 0;
+
 <div class="outmost-container">
   <div class="buttons-container">
     <mat-button-toggle-group
+      [disabled]="loading"
       name="view selector"
       aria-label="view type"
       [value]="view"
@@ -13,6 +19,7 @@
       mat-raised-button
       color="primary"
       name="add user"
+      [disabled]="loading"
       aria-label="add user"
       (click)="onAddUser()"
     >
@@ -23,13 +30,14 @@
     <form>
       <mat-form-field>
         <mat-label>Filter</mat-label>
-        <input matInput value="" [formControl]="search" />
+        <input [disabled]="loading" matInput value="" [formControl]="search" />
       </mat-form-field>
     </form>
     <mat-paginator
       #paginator
       (page)="handlePageEvent($event)"
-      [length]="(filteredDataLength$ | async) || 0"
+      [disabled]="loading"
+      [length]="fileteredDataLength"
       [pageSize]="pageSize"
       [pageSizeOptions]="pageSizeOptions"
       aria-label="Select page"
@@ -44,16 +52,13 @@
 
   <ng-template #cardsTemplate>
     <app-users-cards
-      [data]="(paginatedData$ | async) || []"
-      [loading]="(loading$ | async) || false"
+      [data]="paginatedData"
+      [loading]="loading"
     ></app-users-cards>
   </ng-template>
 
   <ng-template #tableTemplate>
-    <app-users-table
-      [data]="(paginatedData$ | async) || []"
-      [loading]="(loading$ | async) || false"
-    >
+    <app-users-table [data]="paginatedData" [loading]="loading">
     </app-users-table>
   </ng-template>
 </div>
