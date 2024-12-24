@@ -7,14 +7,15 @@
     <p class="loading-message">Loading users</p>
     <p>(this might take a while due to server startup, please wait)</p>
     <ngx-skeleton-loader
+      class="cards-container"
       [theme]="{
-        height: '120px',
-        width: '220px',
+        height: '180px',
+        width: '100%',
         borderRadius: '5%',
         margin: '8px'
       }"
       appearance="circle"
-      count="15"
+      count="3"
     ></ngx-skeleton-loader>
   </ng-template>
 
