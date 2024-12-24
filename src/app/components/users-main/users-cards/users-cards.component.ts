@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 
 @Component({
-  selector: 'app-users-cards',
-  templateUrl: './users-cards.component.html',
-  styleUrls: ['./users-cards.component.scss'],
+    selector: 'app-users-cards',
+    templateUrl: './users-cards.component.html',
+    styleUrls: ['./users-cards.component.scss'],
+    standalone: false
 })
 export class UsersCardsComponent {
   @Input() data: User[] = [];
