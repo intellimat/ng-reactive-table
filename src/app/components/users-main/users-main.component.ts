@@ -22,7 +22,7 @@ import { paginatorConfig } from './paginator.config';
 })
 export class UsersMainComponent implements OnInit {
   loading$ = this.store.select(usersFeature.selectLoading);
-  search = new FormControl<string>('');
+  search = new FormControl<string>({ value: '', disabled: true });
   view = 'cardsView';
 
   pageSize = paginatorConfig.pageSize;
@@ -43,10 +43,19 @@ export class UsersMainComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadUsers());
     this.updateUsersState();
+    this.enableForm();
   }
 
   onChange(event: MatButtonToggleChange) {
     this.view = event.value;
+  }
+
+  private enableForm() {
+    console.log('executing enable');
+    this.loading$.subscribe((isLoading) => {
+      if (isLoading && this.search.enabled) this.search.disable();
+      else if (!isLoading && this.search.disabled) this.search.enable();
+    });
   }
 
   onAddUser() {
