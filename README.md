@@ -1,6 +1,6 @@
 # ng-reactive-table
 
-This is a CRUD web application developed with **Angular 17** (see the full stack in the section below).
+This is a CRUD web application developed with **Angular 19** (see the full stack in the section below).
 The API server referenced by the frontend returns some data (i.e. users with certain attributes), while the frontend provides the ability to _view_, _update_, and _delete_ data via HTTPS requests.
 Filtering and pagination have also been implemented in the frontend.
 
